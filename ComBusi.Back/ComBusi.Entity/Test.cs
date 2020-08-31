@@ -8,5 +8,6 @@ namespace ComBusi.Entity
   {
 
     public string Name { get; set; }
+    public string TestProp { get; set; }
   }
 }
