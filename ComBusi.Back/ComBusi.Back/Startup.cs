@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.Swagger;
 
 namespace ComBusi.Back
 {
@@ -27,6 +28,10 @@ namespace ComBusi.Back
  
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("ComBusiSwagger", null);
+      });
 
       services.AddMvc(option => option.EnableEndpointRouting = false);
       var databaseConnection = @"Server=DESKTOP-AHU9E0V\MSSQLSERVERR;Database=ComBusiDatabase;Trusted_Connection=True;ConnectRetryCount=0";
@@ -45,6 +50,13 @@ namespace ComBusi.Back
         
         app.UseHsts();
       }
+
+      app.UseSwagger()
+          .UseSwaggerUI(c =>
+            {
+              c.SwaggerEndpoint("/swagger/ComBusiSwagger/swagger.json", "Swagger Test .Net Core");
+            });
+
 
       app.UseHttpsRedirection();
       app.UseMvc();
